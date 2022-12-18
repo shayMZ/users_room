@@ -1,12 +1,18 @@
 class User {
-    FirstName: string;
-    LastName: string;
-    Email: string;
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    roomId: number;
+    isAdmin: boolean;
 
-    constructor(firstName: string, lastName: string, email: string) {
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Email = email;
+    constructor(id: number, firstName: string, lastName: string, email: string, roomId: number, isAdmin: boolean) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.isAdmin = isAdmin;
+        this.id = id;
+        this.roomId = roomId;
     }
 }
 

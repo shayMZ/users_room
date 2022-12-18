@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Room from "../data/Room";
-import RoomStatus from "./roomStatus";
-import Users from "./users";
+import RoomData from "./roomData";
 
 function Rooms() {
     const [error, setError] = useState(null);
@@ -24,12 +23,7 @@ function Rooms() {
     } else {
         return <div>
             {items.map((room: Room) => {
-                return <div className={'roomInfo'} key={room.id}>
-                    <div>{room.id}</div>
-                    <RoomStatus id={room.id} status={room.isActive}/>
-                    <div>{room.users?.length}</div>
-                    <Users roomId={room.id} />
-                </div>
+                return <RoomData key={room.id} room={room}/>
             })}
         </div>
     }
