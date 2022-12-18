@@ -3,10 +3,19 @@ import UserInfo from "./userInfo";
 import User from "../data/User";
 import AppData from "../data/AppData";
 
-function Users(props: { roomId: number }) {
+function Users(props: { roomId: number, onChangeRoomStatus(status: boolean): void }) {
     const [users, setItems] = useState(Array<User>());
+
+    function checkRoomStatus(filtered_users: User[]) {
+        if (filtered_users.every(u => u.isAdmin)) {
+            props.onChangeRoomStatus(false);
+        }
+    }
+
     useEffect(() => {
-        setItems(AppData.users_list.filter(user => user.roomId === props.roomId));
+        const filtered_users = AppData.users_list.filter(user => user.roomId === props.roomId);
+        setItems(filtered_users);
+        checkRoomStatus(filtered_users);
     }, [])
 
     function onDataChanged(userId: number) {
@@ -14,7 +23,9 @@ function Users(props: { roomId: number }) {
         if (validateRemoveMembers(user)) {
             const idx = AppData.users_list.findIndex(c => c.id === userId);
             AppData.users_list.splice(idx, 1);
-            setItems(AppData.users_list.filter(user => user.roomId === props.roomId));
+            const filtered_users = AppData.users_list.filter(user => user.roomId === props.roomId);
+            setItems(filtered_users);
+            checkRoomStatus(filtered_users);
         } else {
             alert('Must be one admin in a room');
         }
